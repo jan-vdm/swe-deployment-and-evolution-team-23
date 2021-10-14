@@ -23,9 +23,10 @@ steps:
 - task: Yarn@3
   inputs:
    arguments: 'test'
-- task: Yarn@3
+- task: Bash@3
   inputs:
-   arguments: 'build'
+    targetType: 'inline'
+    script: 'VITE_API_KEY=$(VITE_API_KEY) && yarn build'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.Repository.LocalPath)/dist'
