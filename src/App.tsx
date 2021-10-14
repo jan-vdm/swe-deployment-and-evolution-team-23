@@ -1,60 +1,13 @@
 import { Component, createEffect, createResource } from "solid-js";
+import { Show } from "solid-js/web";
+import fetchWeather from "./fetchWeather";
 
 import styles from "./App.module.css";
-import { Show } from "solid-js/web";
-
-type WeatherData = {
-  location: {
-    name: string;
-    region: string;
-    country: string;
-    localtime: string;
-  };
-  current: {
-    tempC: number;
-    condition: {
-      text: string;
-      icon: string;
-      code: number;
-    };
-  };
-};
-
-const fetchWeather = async () => {
-  try {
-    const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${
-        import.meta.env.VITE_API_KEY
-      }&q=Melbourne`,
-      {
-        method: "GET",
-      }
-    );
-    const responseData = await response.json();
-    const weatherData: WeatherData = {
-      location: {
-        name: responseData.location.name,
-        region: responseData.location.region,
-        country: responseData.location.country,
-        localtime: responseData.location.localtime,
-      },
-      current: {
-        tempC: responseData.current["temp_c"],
-        condition: {
-          text: responseData.current.condition.text,
-          icon: responseData.current.condition.icon,
-          code: responseData.current.condition.code,
-        },
-      },
-    };
-    return weatherData;
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 const App: Component = () => {
-  const [data, { refetch }] = createResource(fetchWeather);
+  const [data, { refetch }] = createResource(() =>
+    fetchWeather(import.meta.env.VITE_API_KEY as string)
+  );
   createEffect(() => {
     console.log(data());
   });
