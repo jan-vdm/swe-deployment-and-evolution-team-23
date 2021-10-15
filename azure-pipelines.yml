@@ -25,9 +25,11 @@ steps:
   inputs:
    arguments: 'test'
 - task: Bash@3
+  env:
+      API_KEY: $(VITE_API_KEY)
   inputs:
     targetType: 'inline'
-    script: 'VITE_API_KEY=$(VITE_API_KEY) && yarn build:prod'
+    script: 'VITE_API_KEY=$API_KEY && yarn build:prod'
 - task: ArchiveFiles@2
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   inputs:
