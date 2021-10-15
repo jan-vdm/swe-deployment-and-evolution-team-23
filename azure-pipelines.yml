@@ -5,6 +5,7 @@
 
 trigger:
 - main
+- *
 
 pool:
   vmImage: ubuntu-latest
@@ -28,6 +29,7 @@ steps:
     targetType: 'inline'
     script: 'VITE_API_KEY=$(VITE_API_KEY) && yarn build:prod'
 - task: ArchiveFiles@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   inputs:
     rootFolderOrFile: '$(Build.Repository.LocalPath)/dist'
     includeRootFolder: true
@@ -35,6 +37,7 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/weather-web-app.zip'
     replaceExistingArchive: true
 - task: PublishBuildArtifacts@1
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
