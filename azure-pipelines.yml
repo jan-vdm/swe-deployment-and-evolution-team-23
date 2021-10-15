@@ -24,11 +24,11 @@ steps:
 - task: Yarn@3
   inputs:
    arguments: 'test'
-- task: CmdLine@2
-  inputs:
-    script: 'VITE_API_KEY=$API_KEY && yarn build:prod'
+
+- bash: VITE_API_KEY=$API_KEY && yarn build:prod
   env:
     API_KEY: $(VITE_API_KEY)
+
 - task: ArchiveFiles@2
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   inputs:
