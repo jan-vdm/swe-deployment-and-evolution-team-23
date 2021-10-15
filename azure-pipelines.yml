@@ -25,9 +25,9 @@ steps:
   inputs:
    arguments: 'test'
 
-- bash: VITE_API_KEY=$API_KEY && yarn build:prod
+- bash: yarn build:prod
   env:
-    API_KEY: $(VITE_API_KEY)
+    VITE_API_KEY: $(VITE_API_KEY)
 
 - task: ArchiveFiles@2
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
