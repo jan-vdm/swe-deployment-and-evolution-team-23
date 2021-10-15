@@ -18,9 +18,13 @@ type WeatherData = {
 export const fetchWeather = async (key: string) => {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${key}&q=Melbourne`,
+      `https://api.weatherapi.com/v1/current.json?key=${key}&q=Melbourne&aqi=no`,
       {
         method: "GET",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       }
     );
     const responseData = await response.json();
@@ -42,7 +46,7 @@ export const fetchWeather = async (key: string) => {
     };
     return weatherData;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
