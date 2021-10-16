@@ -1,17 +1,37 @@
 import { Component, createEffect, createResource } from "solid-js";
 import { Show } from "solid-js/web";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import fetchWeather from "./fetchWeather";
 
 import styles from "./App.module.css";
 
+const insightsConnectionString = import.meta.env
+  .VITE_INSIGHTS_CONNECTION_STRING;
+
+let appInsights: ApplicationInsights | undefined;
+
+if (insightsConnectionString) {
+  if (import.meta.env.PROD) {
+    appInsights = new ApplicationInsights({
+      config: {
+        connectionString: insightsConnectionString as string,
+        enableRequestHeaderTracking: true,
+        enableResponseHeaderTracking: true,
+      },
+    });
+    appInsights.loadAppInsights();
+  }
+}
+
 const App: Component = () => {
+  appInsights?.trackPageView();
   const [data, { refetch }] = createResource(() =>
     fetchWeather(import.meta.env.VITE_API_KEY as string)
   );
   createEffect(() => {
     console.log(data());
   });
-  setInterval(() => refetch(), 10 * 60 * 1000);
+  setInterval(() => refetch(), 5 * 60 * 1000);
   return (
     <div class={styles.App}>
       <main class={styles.main}>
