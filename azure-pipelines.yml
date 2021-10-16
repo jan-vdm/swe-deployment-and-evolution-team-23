@@ -28,6 +28,7 @@ steps:
 - bash: yarn build:prod
   env:
     VITE_API_KEY: $(VITE_API_KEY)
+    VITE_INSIGHTS_CONNECTION_STRING: $(VITE_INSIGHTS_CONNECTION_STRING)
 
 - task: ArchiveFiles@2
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
