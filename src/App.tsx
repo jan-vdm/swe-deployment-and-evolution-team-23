@@ -36,17 +36,17 @@ const App: Component = () => {
     <div class={styles.App}>
       <main class={styles.main}>
         <h1>Weather</h1>
-        <p>
-          <img
-            src={data()?.current.condition.icon}
-            width={84}
-            height={84}
-            alt="weather icon"
-          />
-          <br />
-          <span>It is currently,</span>
-          <br />
-          <Show when={!data.loading} fallback={<div>Loading Weather...</div>}>
+        <Show when={!data.loading} fallback={<div>Loading Weather...</div>}>
+          <p>
+            <img
+              src={data()?.current.condition.icon}
+              width={84}
+              height={84}
+              alt="weather icon"
+            />
+            <br />
+            <span>It is currently,</span>
+            <br />
             <span>{data()?.current.tempC}&deg;C</span>
             <br />
             <span>
@@ -56,14 +56,14 @@ const App: Component = () => {
             <br />
             <span>
               it is considered to be{" "}
-              {data()?.current.condition.text.toLowerCase()} ✨
+              {data()?.current.condition.text.toLowerCase()} 🥊
             </span>
             <br />
             <span class={styles.small}>
               last updated at {data()?.location.localtime}
             </span>
-          </Show>
-        </p>
+          </p>
+        </Show>
       </main>
     </div>
   );
