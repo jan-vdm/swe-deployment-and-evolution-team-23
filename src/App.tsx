@@ -56,7 +56,7 @@ const App: Component = () => {
             <br />
             <span>
               it is considered to be{" "}
-              {data()?.current.condition.text.toLowerCase()} 🧨
+              {data()?.current.condition.text.toLowerCase()} 🎏
             </span>
             <br />
             <span class={styles.small}>
